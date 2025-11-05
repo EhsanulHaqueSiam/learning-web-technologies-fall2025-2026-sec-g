@@ -1,0 +1,19 @@
+<students>
+    <student sr="1">
+        <slno>23</slno>
+        <name>John Carter</name>
+        <admission_date>25/12/2015</admission_date>
+    </student>
+
+    <student sr="2">
+        <slno>29</slno>
+        <name>Bob Marshal</name>
+        <admission_date>13/01/1999</admission_date>
+    </student>
+
+    <student sr="3">
+        <slno>35</slno>
+        <name>Clark Kent </name>
+        <admission_date>17/06/2005</admission_date>
+    </student>
+</students>
