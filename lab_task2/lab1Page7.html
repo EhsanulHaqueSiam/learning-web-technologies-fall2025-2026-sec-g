@@ -1,0 +1,84 @@
+<html>
+
+<head>
+    <title>Form</title>
+</head>
+
+<body>
+
+    <form onsubmit="return validate()">
+        <table width="350">
+            <tr>
+                <td>
+                    <fieldset>
+                        <legend>Profile Picture</legend>
+                        <table>
+                            <tr>
+                                <td>
+                                    <label for="userId">User ID</label>
+                                    <input type="text" id="userId" size="12" onblur="validateUserId()">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="profilePicture">Picture</label>
+                                    <input type="file" id="profilePicture" accept="image/*" onchange="validatePicture()">
+                                </td>
+                            </tr>
+                        </table>
+                        <p id="error"></p>
+                        <hr>
+                        <input type="submit" value="Submit">
+                    </fieldset>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <script>
+        function validateUserId() {
+            let userId = document.getElementById('userId').value.trim();
+            let error = document.getElementById('error');
+            
+            if (userId === "") {
+                error.innerHTML = "User ID cannot be empty!";
+                error.style.color = "red";
+                return false;
+            }
+            
+            let userIdNum = Number(userId);
+            if (isNaN(userIdNum) || userIdNum <= 0) {
+                error.innerHTML = "User ID must be a positive number!";
+                error.style.color = "red";
+                return false;
+            }
+            
+            error.innerHTML = "";
+            return true;
+        }
+
+        function validatePicture() {
+            let profilePicture = document.getElementById('profilePicture').value;
+            let error = document.getElementById('error');
+            
+            if (profilePicture === "") {
+                error.innerHTML = "Please select a profile picture!";
+                error.style.color = "red";
+                return false;
+            }
+            
+            error.innerHTML = "";
+            return true;
+        }
+
+        function validate() {
+            let userIdValid = validateUserId();
+            let pictureValid = validatePicture();
+            
+            return userIdValid && pictureValid;
+        }
+    </script>
+
+</body>
+
+</html>

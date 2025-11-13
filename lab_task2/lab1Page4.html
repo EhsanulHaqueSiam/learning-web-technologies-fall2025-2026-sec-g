@@ -1,0 +1,92 @@
+<html>
+
+<head>
+    <title>Form</title>
+</head>
+
+<body>
+
+    <form onsubmit="return validate()">
+        <table width="300">
+            <tr>
+                <td>
+                    <fieldset>
+                        <legend>Date of Birth</legend>
+                        <table>
+                            <tr>
+                                <td>
+                                    <label for="day">dd</label><br>
+                                    <input type="text" id="day" pattern="[0-9]*" inputmode="numeric" size="2" onblur="validateDOB()">
+                                </td>
+                                <td>
+                                    <label for="month">mm</label><br>
+                                    <input type="text" id="month" pattern="[0-9]*" inputmode="numeric" size="2" onblur="validateDOB()">
+                                </td>
+                                <td>
+                                    <label for="year">yyyy</label><br>
+                                    <input type="text" id="year" pattern="[0-9]*" inputmode="numeric" size="4" onblur="validateDOB()">
+                                </td>
+                            </tr>
+                        </table>
+                        <p id="error"></p>
+                        <hr>
+                        <input type="submit" value="Submit">
+                    </fieldset>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <script>
+        function validateDOB() {
+            let day = document.getElementById('day').value.trim();
+            let month = document.getElementById('month').value.trim();
+            let year = document.getElementById('year').value.trim();
+            let error = document.getElementById('error');
+            
+            if (day === "" || month === "" || year === "") {
+                error.innerHTML = "All fields are required!";
+                error.style.color = "red";
+                return false;
+            }
+            
+            let dayNum = Number(day);
+            let monthNum = Number(month);
+            let yearNum = Number(year);
+            
+            if (isNaN(dayNum) || isNaN(monthNum) || isNaN(yearNum)) {
+                error.innerHTML = "Must be valid numbers!";
+                error.style.color = "red";
+                return false;
+            }
+            
+            if (dayNum < 1 || dayNum > 31) {
+                error.innerHTML = "Day must be between 1 and 31!";
+                error.style.color = "red";
+                return false;
+            }
+            
+            if (monthNum < 1 || monthNum > 12) {
+                error.innerHTML = "Month must be between 1 and 12!";
+                error.style.color = "red";
+                return false;
+            }
+            
+            if (yearNum < 1900 || yearNum > 2016) {
+                error.innerHTML = "Year must be between 1900 and 2016!";
+                error.style.color = "red";
+                return false;
+            }
+            
+            error.innerHTML = "";
+            return true;
+        }
+
+        function validate() {
+            return validateDOB();
+        }
+    </script>
+
+</body>
+
+</html>
