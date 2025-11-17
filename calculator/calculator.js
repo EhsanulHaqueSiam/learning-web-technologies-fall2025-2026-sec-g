@@ -86,6 +86,17 @@ for (let i = 7; i <= 9; i++) {
     row2.appendChild(td);
 }
 
+const subTd = document.createElement('td');
+const subtractButton = document.createElement('button');
+subtractButton.textContent = '-';
+subtractButton.onclick = function() {
+    firstNumber = parseFloat(display.value);
+    operator = '-';
+    display.value = '0';
+};
+subTd.appendChild(subtractButton);
+row2.appendChild(subTd);
+
 table.appendChild(row2);
 
 calculator.appendChild(table);
