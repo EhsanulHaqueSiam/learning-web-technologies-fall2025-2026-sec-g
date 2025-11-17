@@ -116,6 +116,17 @@ for (let i = 4; i <= 6; i++) {
     row3.appendChild(td);
 }
 
+const addTd = document.createElement('td');
+const addButton = document.createElement('button');
+addButton.textContent = '+';
+addButton.onclick = function() {
+    firstNumber = parseFloat(display.value);
+    operator = '+';
+    display.value = '0';
+};
+addTd.appendChild(addButton);
+row3.appendChild(addTd);
+
 table.appendChild(row3);
 
 calculator.appendChild(table);
