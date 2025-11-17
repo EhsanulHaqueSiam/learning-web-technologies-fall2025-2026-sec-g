@@ -146,6 +146,35 @@ for (let i = 1; i <= 3; i++) {
     row4.appendChild(td);
 }
 
+const eqTd = document.createElement('td');
+eqTd.rowSpan = '2';
+const equalsButton = document.createElement('button');
+equalsButton.textContent = '=';
+equalsButton.style.height = '100%';
+equalsButton.style.width = '100%';
+equalsButton.onclick = function() {
+    if (firstNumber !== null && operator !== null) {
+        const secondNumber = parseFloat(display.value);
+        if (operator === '+') {
+            display.value = firstNumber + secondNumber;
+        } else if (operator === '-') {
+            display.value = firstNumber - secondNumber;
+        } else if (operator === '*') {
+            display.value = firstNumber * secondNumber;
+        } else if (operator === '/') {
+            if (secondNumber === 0) {
+                display.value = 'Error';
+            } else {
+                display.value = firstNumber / secondNumber;
+            }
+        }
+        firstNumber = null;
+        operator = null;
+    }
+};
+eqTd.appendChild(equalsButton);
+row4.appendChild(eqTd);
+
 table.appendChild(row4);
 
 calculator.appendChild(table);
