@@ -56,6 +56,17 @@ divideButton.onclick = function() {
 divTd.appendChild(divideButton);
 row1.appendChild(divTd);
 
+const mulTd = document.createElement('td');
+const multiplyButton = document.createElement('button');
+multiplyButton.textContent = '*';
+multiplyButton.onclick = function() {
+    firstNumber = parseFloat(display.value);
+    operator = '*';
+    display.value = '0';
+};
+mulTd.appendChild(multiplyButton);
+row1.appendChild(mulTd);
+
 table.appendChild(row1);
 
 calculator.appendChild(table);
