@@ -177,5 +177,24 @@ row4.appendChild(eqTd);
 
 table.appendChild(row4);
 
+const row5 = document.createElement('tr');
+
+const zeroTd = document.createElement('td');
+zeroTd.colSpan = '3';
+const zeroButton = document.createElement('button');
+zeroButton.textContent = '0';
+zeroButton.style.width = '100%';
+zeroButton.onclick = function() {
+    if (display.value === '0') {
+        display.value = '0';
+    } else {
+        display.value += '0';
+    }
+};
+zeroTd.appendChild(zeroButton);
+row5.appendChild(zeroTd);
+
+table.appendChild(row5);
+
 calculator.appendChild(table);
 body.appendChild(calculator);
