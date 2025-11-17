@@ -14,6 +14,16 @@ calculator.appendChild(display);
 let firstNumber = null;
 let operator = null;
 
+function isValidNumber(value) {
+    return typeof value === 'number' && !isNaN(value) && isFinite(value);
+}
+
+function resetCalculator() {
+    display.value = '0';
+    firstNumber = null;
+    operator = null;
+}
+
 const table = document.createElement('table');
 table.border = '1';
 table.cellPadding = '10';
@@ -25,9 +35,7 @@ const ceTd = document.createElement('td');
 const clearEntryButton = document.createElement('button');
 clearEntryButton.textContent = 'CE';
 clearEntryButton.addEventListener('click', function() {
-    display.value = '0';
-    firstNumber = null;
-    operator = null;
+    resetCalculator();
 });
 ceTd.appendChild(clearEntryButton);
 row1.appendChild(ceTd);
@@ -36,6 +44,10 @@ const cTd = document.createElement('td');
 const clearButton = document.createElement('button');
 clearButton.textContent = 'C';
 clearButton.addEventListener('click', function() {
+    if (display.value === 'Error' || display.value === 'NaN') {
+        resetCalculator();
+        return;
+    }
     if (display.value.length > 1) {
         display.value = display.value.slice(0, -1);
     } else {
@@ -49,7 +61,15 @@ const divTd = document.createElement('td');
 const divideButton = document.createElement('button');
 divideButton.textContent = '/';
 divideButton.addEventListener('click', function() {
-    firstNumber = parseFloat(display.value);
+    if (display.value === 'Error' || display.value === 'NaN') {
+        return;
+    }
+    const num = parseFloat(display.value);
+    if (!isValidNumber(num)) {
+        display.value = 'Error';
+        return;
+    }
+    firstNumber = num;
     operator = '/';
     display.value = '0';
 });
@@ -60,7 +80,15 @@ const mulTd = document.createElement('td');
 const multiplyButton = document.createElement('button');
 multiplyButton.textContent = '*';
 multiplyButton.addEventListener('click', function() {
-    firstNumber = parseFloat(display.value);
+    if (display.value === 'Error' || display.value === 'NaN') {
+        return;
+    }
+    const num = parseFloat(display.value);
+    if (!isValidNumber(num)) {
+        display.value = 'Error';
+        return;
+    }
+    firstNumber = num;
     operator = '*';
     display.value = '0';
 });
@@ -76,10 +104,14 @@ for (let i = 7; i <= 9; i++) {
     const button = document.createElement('button');
     button.textContent = i;
     button.addEventListener('click', function() {
+        if (display.value === 'Error' || display.value === 'NaN') {
+            display.value = i.toString();
+            return;
+        }
         if (display.value === '0') {
-            display.value = i;
+            display.value = i.toString();
         } else {
-            display.value += i;
+            display.value += i.toString();
         }
     });
     td.appendChild(button);
@@ -90,7 +122,15 @@ const subTd = document.createElement('td');
 const subtractButton = document.createElement('button');
 subtractButton.textContent = '-';
 subtractButton.addEventListener('click', function() {
-    firstNumber = parseFloat(display.value);
+    if (display.value === 'Error' || display.value === 'NaN') {
+        return;
+    }
+    const num = parseFloat(display.value);
+    if (!isValidNumber(num)) {
+        display.value = 'Error';
+        return;
+    }
+    firstNumber = num;
     operator = '-';
     display.value = '0';
 });
@@ -106,10 +146,14 @@ for (let i = 4; i <= 6; i++) {
     const button = document.createElement('button');
     button.textContent = i;
     button.addEventListener('click', function() {
+        if (display.value === 'Error' || display.value === 'NaN') {
+            display.value = i.toString();
+            return;
+        }
         if (display.value === '0') {
-            display.value = i;
+            display.value = i.toString();
         } else {
-            display.value += i;
+            display.value += i.toString();
         }
     });
     td.appendChild(button);
@@ -120,7 +164,15 @@ const addTd = document.createElement('td');
 const addButton = document.createElement('button');
 addButton.textContent = '+';
 addButton.addEventListener('click', function() {
-    firstNumber = parseFloat(display.value);
+    if (display.value === 'Error' || display.value === 'NaN') {
+        return;
+    }
+    const num = parseFloat(display.value);
+    if (!isValidNumber(num)) {
+        display.value = 'Error';
+        return;
+    }
+    firstNumber = num;
     operator = '+';
     display.value = '0';
 });
@@ -136,10 +188,14 @@ for (let i = 1; i <= 3; i++) {
     const button = document.createElement('button');
     button.textContent = i;
     button.addEventListener('click', function() {
+        if (display.value === 'Error' || display.value === 'NaN') {
+            display.value = i.toString();
+            return;
+        }
         if (display.value === '0') {
-            display.value = i;
+            display.value = i.toString();
         } else {
-            display.value += i;
+            display.value += i.toString();
         }
     });
     td.appendChild(button);
@@ -153,24 +209,42 @@ equalsButton.textContent = '=';
 equalsButton.style.height = '100%';
 equalsButton.style.width = '100%';
 equalsButton.addEventListener('click', function() {
-    if (firstNumber !== null && operator !== null) {
-        const secondNumber = parseFloat(display.value);
-        if (operator === '+') {
-            display.value = firstNumber + secondNumber;
-        } else if (operator === '-') {
-            display.value = firstNumber - secondNumber;
-        } else if (operator === '*') {
-            display.value = firstNumber * secondNumber;
-        } else if (operator === '/') {
-            if (secondNumber === 0) {
-                display.value = 'Error';
-            } else {
-                display.value = firstNumber / secondNumber;
-            }
-        }
+    if (display.value === 'Error' || display.value === 'NaN') {
+        return;
+    }
+    if (firstNumber === null || operator === null) {
+        return;
+    }
+    const secondNumber = parseFloat(display.value);
+    if (!isValidNumber(firstNumber) || !isValidNumber(secondNumber)) {
+        display.value = 'Error';
         firstNumber = null;
         operator = null;
+        return;
     }
+    let result;
+    if (operator === '+') {
+        result = firstNumber + secondNumber;
+    } else if (operator === '-') {
+        result = firstNumber - secondNumber;
+    } else if (operator === '*') {
+        result = firstNumber * secondNumber;
+    } else if (operator === '/') {
+        if (secondNumber === 0) {
+            display.value = 'Error';
+            firstNumber = null;
+            operator = null;
+            return;
+        }
+        result = firstNumber / secondNumber;
+    }
+    if (!isValidNumber(result)) {
+        display.value = 'NaN';
+    } else {
+        display.value = result.toString();
+    }
+    firstNumber = null;
+    operator = null;
 });
 eqTd.appendChild(equalsButton);
 row4.appendChild(eqTd);
@@ -185,6 +259,10 @@ const zeroButton = document.createElement('button');
 zeroButton.textContent = '0';
 zeroButton.style.width = '100%';
 zeroButton.addEventListener('click', function() {
+    if (display.value === 'Error' || display.value === 'NaN') {
+        display.value = '0';
+        return;
+    }
     if (display.value === '0') {
         display.value = '0';
     } else {
