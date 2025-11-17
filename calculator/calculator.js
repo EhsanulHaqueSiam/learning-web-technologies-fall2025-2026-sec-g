@@ -69,5 +69,24 @@ row1.appendChild(mulTd);
 
 table.appendChild(row1);
 
+const row2 = document.createElement('tr');
+
+for (let i = 7; i <= 9; i++) {
+    const td = document.createElement('td');
+    const button = document.createElement('button');
+    button.textContent = i;
+    button.onclick = function() {
+        if (display.value === '0') {
+            display.value = i;
+        } else {
+            display.value += i;
+        }
+    };
+    td.appendChild(button);
+    row2.appendChild(td);
+}
+
+table.appendChild(row2);
+
 calculator.appendChild(table);
 body.appendChild(calculator);
