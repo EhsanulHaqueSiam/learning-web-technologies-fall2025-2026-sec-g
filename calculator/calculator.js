@@ -45,6 +45,17 @@ clearButton.onclick = function() {
 cTd.appendChild(clearButton);
 row1.appendChild(cTd);
 
+const divTd = document.createElement('td');
+const divideButton = document.createElement('button');
+divideButton.textContent = '/';
+divideButton.onclick = function() {
+    firstNumber = parseFloat(display.value);
+    operator = '/';
+    display.value = '0';
+};
+divTd.appendChild(divideButton);
+row1.appendChild(divTd);
+
 table.appendChild(row1);
 
 calculator.appendChild(table);
