@@ -129,5 +129,24 @@ row3.appendChild(addTd);
 
 table.appendChild(row3);
 
+const row4 = document.createElement('tr');
+
+for (let i = 1; i <= 3; i++) {
+    const td = document.createElement('td');
+    const button = document.createElement('button');
+    button.textContent = i;
+    button.onclick = function() {
+        if (display.value === '0') {
+            display.value = i;
+        } else {
+            display.value += i;
+        }
+    };
+    td.appendChild(button);
+    row4.appendChild(td);
+}
+
+table.appendChild(row4);
+
 calculator.appendChild(table);
 body.appendChild(calculator);
