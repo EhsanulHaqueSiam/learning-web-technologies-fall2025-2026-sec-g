@@ -24,46 +24,46 @@ const row1 = document.createElement('tr');
 const ceTd = document.createElement('td');
 const clearEntryButton = document.createElement('button');
 clearEntryButton.textContent = 'CE';
-clearEntryButton.onclick = function() {
+clearEntryButton.addEventListener('click', function() {
     display.value = '0';
     firstNumber = null;
     operator = null;
-};
+});
 ceTd.appendChild(clearEntryButton);
 row1.appendChild(ceTd);
 
 const cTd = document.createElement('td');
 const clearButton = document.createElement('button');
 clearButton.textContent = 'C';
-clearButton.onclick = function() {
+clearButton.addEventListener('click', function() {
     if (display.value.length > 1) {
         display.value = display.value.slice(0, -1);
     } else {
         display.value = '0';
     }
-};
+});
 cTd.appendChild(clearButton);
 row1.appendChild(cTd);
 
 const divTd = document.createElement('td');
 const divideButton = document.createElement('button');
 divideButton.textContent = '/';
-divideButton.onclick = function() {
+divideButton.addEventListener('click', function() {
     firstNumber = parseFloat(display.value);
     operator = '/';
     display.value = '0';
-};
+});
 divTd.appendChild(divideButton);
 row1.appendChild(divTd);
 
 const mulTd = document.createElement('td');
 const multiplyButton = document.createElement('button');
 multiplyButton.textContent = '*';
-multiplyButton.onclick = function() {
+multiplyButton.addEventListener('click', function() {
     firstNumber = parseFloat(display.value);
     operator = '*';
     display.value = '0';
-};
+});
 mulTd.appendChild(multiplyButton);
 row1.appendChild(mulTd);
 
@@ -75,13 +75,13 @@ for (let i = 7; i <= 9; i++) {
     const td = document.createElement('td');
     const button = document.createElement('button');
     button.textContent = i;
-    button.onclick = function() {
+    button.addEventListener('click', function() {
         if (display.value === '0') {
             display.value = i;
         } else {
             display.value += i;
         }
-    };
+    });
     td.appendChild(button);
     row2.appendChild(td);
 }
@@ -89,11 +89,11 @@ for (let i = 7; i <= 9; i++) {
 const subTd = document.createElement('td');
 const subtractButton = document.createElement('button');
 subtractButton.textContent = '-';
-subtractButton.onclick = function() {
+subtractButton.addEventListener('click', function() {
     firstNumber = parseFloat(display.value);
     operator = '-';
     display.value = '0';
-};
+});
 subTd.appendChild(subtractButton);
 row2.appendChild(subTd);
 
@@ -105,13 +105,13 @@ for (let i = 4; i <= 6; i++) {
     const td = document.createElement('td');
     const button = document.createElement('button');
     button.textContent = i;
-    button.onclick = function() {
+    button.addEventListener('click', function() {
         if (display.value === '0') {
             display.value = i;
         } else {
             display.value += i;
         }
-    };
+    });
     td.appendChild(button);
     row3.appendChild(td);
 }
@@ -119,11 +119,11 @@ for (let i = 4; i <= 6; i++) {
 const addTd = document.createElement('td');
 const addButton = document.createElement('button');
 addButton.textContent = '+';
-addButton.onclick = function() {
+addButton.addEventListener('click', function() {
     firstNumber = parseFloat(display.value);
     operator = '+';
     display.value = '0';
-};
+});
 addTd.appendChild(addButton);
 row3.appendChild(addTd);
 
@@ -135,13 +135,13 @@ for (let i = 1; i <= 3; i++) {
     const td = document.createElement('td');
     const button = document.createElement('button');
     button.textContent = i;
-    button.onclick = function() {
+    button.addEventListener('click', function() {
         if (display.value === '0') {
             display.value = i;
         } else {
             display.value += i;
         }
-    };
+    });
     td.appendChild(button);
     row4.appendChild(td);
 }
@@ -152,7 +152,7 @@ const equalsButton = document.createElement('button');
 equalsButton.textContent = '=';
 equalsButton.style.height = '100%';
 equalsButton.style.width = '100%';
-equalsButton.onclick = function() {
+equalsButton.addEventListener('click', function() {
     if (firstNumber !== null && operator !== null) {
         const secondNumber = parseFloat(display.value);
         if (operator === '+') {
@@ -171,7 +171,7 @@ equalsButton.onclick = function() {
         firstNumber = null;
         operator = null;
     }
-};
+});
 eqTd.appendChild(equalsButton);
 row4.appendChild(eqTd);
 
@@ -184,13 +184,13 @@ zeroTd.colSpan = '3';
 const zeroButton = document.createElement('button');
 zeroButton.textContent = '0';
 zeroButton.style.width = '100%';
-zeroButton.onclick = function() {
+zeroButton.addEventListener('click', function() {
     if (display.value === '0') {
         display.value = '0';
     } else {
         display.value += '0';
     }
-};
+});
 zeroTd.appendChild(zeroButton);
 row5.appendChild(zeroTd);
 
