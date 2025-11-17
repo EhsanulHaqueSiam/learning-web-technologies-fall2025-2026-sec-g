@@ -32,6 +32,19 @@ clearEntryButton.onclick = function() {
 ceTd.appendChild(clearEntryButton);
 row1.appendChild(ceTd);
 
+const cTd = document.createElement('td');
+const clearButton = document.createElement('button');
+clearButton.textContent = 'C';
+clearButton.onclick = function() {
+    if (display.value.length > 1) {
+        display.value = display.value.slice(0, -1);
+    } else {
+        display.value = '0';
+    }
+};
+cTd.appendChild(clearButton);
+row1.appendChild(cTd);
+
 table.appendChild(row1);
 
 calculator.appendChild(table);
