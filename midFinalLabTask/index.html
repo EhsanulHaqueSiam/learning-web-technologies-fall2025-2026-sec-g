@@ -1,0 +1,208 @@
+<html>
+<head>
+    <title>Dynamic Form</title>
+</head>
+<body>
+
+    <label>Label Name:</label>
+    <input type="text" id="labelInput">
+    
+    <label>Choose Type:</label>
+    <select id="typeDropdown" onchange="checkType()">
+        <option value="text">textbox</option>
+        <option value="number">number</option>
+        <option value="date">date of birth</option>
+        <option value="checkbox">checkbox</option>
+        <option value="radio">radiobutton</option>
+    </select>
+
+    <div id="optionContainer" style="display: none;">
+        <br>
+        <label>Option Value (e.g. Male):</label>
+        <input type="text" id="optionInput">
+    </div>
+
+    <br>
+    <span id="errorMsg" style="color: red;"></span>
+    <br><br>
+    
+    <button onclick="addField()">Add</button>
+
+    <hr>
+
+    <div id="formArea"></div>
+    
+    <br>
+    <button id="saveBtn" onclick="saveData()" style="display: none;">Save Data</button>
+
+    <hr>
+    <div id="savedResults"></div>
+
+    <script>
+        let fields = [];
+
+        function checkType() {
+            let type = document.getElementById("typeDropdown").value;
+            let optionDiv = document.getElementById("optionContainer");
+            
+            if (type == "radio") {
+                optionDiv.style.display = "block";
+            } else {
+                optionDiv.style.display = "none";
+            }
+        }
+
+        function addField() {
+            let label = document.getElementById("labelInput").value;
+            let type = document.getElementById("typeDropdown").value;
+            let optionVal = document.getElementById("optionInput").value;
+            let errorSpan = document.getElementById("errorMsg");
+            let formArea = document.getElementById("formArea");
+            let saveBtn = document.getElementById("saveBtn");
+
+            if (label == "") {
+                errorSpan.innerText = "Please enter a Label Name";
+                return;
+            }
+            if (type == "radio" && optionVal == "") {
+                errorSpan.innerText = "Please enter an Option Value";
+                return;
+            }
+            errorSpan.innerText = "";
+
+            let existingIndex = -1;
+            for (let i = 0; i < fields.length; i++) {
+                if (fields[i].label == label && fields[i].type == "radio" && type == "radio") {
+                    existingIndex = i;
+                    break;
+                }
+            }
+
+            if (existingIndex > -1) {
+                let container = document.getElementById("group_" + existingIndex);
+                
+                let r = document.createElement("input");
+                r.type = "radio";
+                r.name = "radio_" + existingIndex;
+                r.value = optionVal;
+                
+                container.appendChild(r);
+                container.appendChild(document.createTextNode(" " + optionVal + " "));
+                
+                fields[existingIndex].options.push(optionVal);
+
+            } else {
+                let div = document.createElement("div");
+                
+                div.appendChild(document.createElement("br"));
+
+                if (type == "radio") {
+                    div.id = "group_" + fields.length;
+                }
+
+                let lbl = document.createElement("label");
+                lbl.innerText = label + ": ";
+                div.appendChild(lbl);
+
+                if (type == "radio") {
+                    let r = document.createElement("input");
+                    r.type = "radio";
+                    r.name = "radio_" + fields.length;
+                    r.value = optionVal;
+                    
+                    div.appendChild(r);
+                    div.appendChild(document.createTextNode(" " + optionVal + " "));
+                    
+                    fields.push({
+                        label: label,
+                        type: type,
+                        options: [optionVal],
+                        domId: "group_" + fields.length
+                    });
+
+                } else {
+                    let inp = document.createElement("input");
+                    inp.type = type;
+                    inp.id = "input_" + fields.length;
+                    
+                    div.appendChild(inp);
+
+                    fields.push({
+                        label: label,
+                        type: type,
+                        domId: "input_" + fields.length
+                    });
+                }
+
+                let err = document.createElement("span");
+                err.id = "err_" + (fields.length - 1);
+                err.style.color = "red";
+                div.appendChild(document.createTextNode(" ")); 
+                div.appendChild(err);
+
+                formArea.appendChild(div);
+            }
+
+            document.getElementById("labelInput").value = "";
+            document.getElementById("optionInput").value = "";
+            
+            saveBtn.style.display = "block";
+        }
+
+        function saveData() {
+            let resultDiv = document.getElementById("savedResults");
+            resultDiv.innerHTML = "";
+            
+            let allValid = true;
+            let tempText = [];
+
+            for (let i = 0; i < fields.length; i++) {
+                let f = fields[i];
+                let err = document.getElementById("err_" + i);
+                let val = "";
+                let filled = false;
+
+                if (f.type == "radio") {
+                    let radios = document.getElementsByName("radio_" + i);
+                    for (let j = 0; j < radios.length; j++) {
+                        if (radios[j].checked) {
+                            val = radios[j].value;
+                            filled = true;
+                        }
+                    }
+                } else {
+                    let inp = document.getElementById("input_" + i);
+                    if (f.type == "checkbox") {
+                        val = inp.checked ? "Yes" : "No";
+                        filled = true;
+                    } else {
+                        val = inp.value;
+                        if (val != "") filled = true;
+                    }
+                }
+
+                if (!filled) {
+                    err.innerText = "* Required";
+                    allValid = false;
+                } else {
+                    err.innerText = "";
+                    tempText.push(f.label + ": " + val);
+                }
+            }
+
+            if (allValid) {
+                for (let k = 0; k < tempText.length; k++) {
+                    let p = document.createElement("p");
+                    p.innerText = tempText[k];
+                    resultDiv.appendChild(p);
+                }
+                
+                document.getElementById("formArea").innerHTML = "";
+                fields = [];
+                document.getElementById("saveBtn").style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>
