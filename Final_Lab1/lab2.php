@@ -1,15 +1,18 @@
 <?php
 
+echo "<h3>1. Rectangle Area & Perimeter</h3>";
 // 1. Rectangle
 $length = 10;
 $width = 5;
 echo "Area: " . ($length * $width) . "<br>";
 echo "Perimeter: " . (2 * ($length + $width)) . "<br><br>";
 
+echo "<h3>2. VAT Calculator</h3>";
 // 2. VAT
 $amount = 100;
 echo "VAT: " . ($amount * 0.15) . "<br><br>";
 
+echo "<h3>3. Odd or Even</h3>";
 // 3. Odd/Even
 $num = 25;
 if ($num % 2 == 0)
@@ -17,6 +20,7 @@ if ($num % 2 == 0)
 else
     echo "$num is Odd<br><br>";
 
+echo "<h3>4. Largest Number</h3>";
 // 4. Largest
 $a = 10;
 $b = 25;
@@ -29,6 +33,7 @@ else
     echo "Largest: $c";
 echo "<br><br>";
 
+echo "<h3>5. Odd Numbers (10-100)</h3>";
 // 5. Odd Numbers 10-100
 for ($i = 10; $i <= 100; $i++) {
     if ($i % 2 != 0)
@@ -36,6 +41,7 @@ for ($i = 10; $i <= 100; $i++) {
 }
 echo "<br><br>";
 
+echo "<h3>6. Search Array</h3>";
 // 6. Search Array
 $arr = [10, 20, 30, 40, 50];
 $find = 30;
@@ -51,6 +57,7 @@ if (!$found)
     echo "Not found";
 echo "<br><br>";
 
+echo "<h3>7. Shapes</h3>";
 // 7. Shapes
 for ($i = 1; $i <= 3; $i++) {
     for ($j = 1; $j <= $i; $j++)
@@ -76,6 +83,7 @@ for ($i = 1; $i <= 3; $i++) {
 }
 echo "<br>";
 
+echo "<h3>8. 2D Array Shapes</h3>";
 // 8. 2D Array Shapes
 $matrix = [
     [1, 2, 3, 'A'],
